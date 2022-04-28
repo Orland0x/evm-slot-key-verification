@@ -6,21 +6,17 @@ import { ethers } from 'hardhat';
 import { Contract, ContractFactory } from 'ethers';
 
 async function main(): Promise<void> {
-  // Hardhat always runs the compile task when running scripts through it.
-  // If this runs in a standalone fashion you may want to call compile manually
-  // to make sure everything is compiled
-  // await run("compile");
-  // We get the contract to deploy
-  const TestTokenFactory: ContractFactory = await ethers.getContractFactory(
-    'TestToken',
+  const TestContractFactory: ContractFactory = await ethers.getContractFactory(
+    'TestContract',
   );
-  const testToken: Contract = await TestTokenFactory.deploy();
-  await testToken.deployed();
-  console.log('TestToken deployed to: ', testToken.address);
+  const testContract: Contract = await TestContractFactory.deploy();
+  await testContract.deployed();
+  console.log('TestContract deployed to: ', testContract.address);
+
+  const sig = testContract.interface.functions.getBalance;
+  console.log(sig);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error: Error) => {
